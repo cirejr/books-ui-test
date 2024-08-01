@@ -36,9 +36,6 @@ export function BookShelfProvider({ children }: { children: React.ReactNode }) {
     fetchData();
   }, []);
 
-  console.log("books", books);
-  console.log("shelves", shelves);
-
   return (
     <BookShelfContext.Provider value={{ books, shelves, isLoading }}>
       {children}

@@ -88,3 +88,31 @@ export async function getBook(formId: string) {
   const data = await response.json();
   return data;
 }
+
+export async function getSearchBooks(limit = 20, offset = 0) {
+  const shelves = await getShelves();
+  const allBookDetails: Book[] = [];
+
+  for (const shelf of shelves) {
+    let hasMore = true;
+
+    while (hasMore && allBookDetails.length < limit + offset) {
+      const { bookIds, hasMore: moreBooks } = await getBookIds(
+        shelf.id,
+        limit,
+        offset,
+      );
+
+      const books = await getBookDetails(bookIds);
+      allBookDetails.push(...books);
+
+      hasMore = moreBooks;
+
+      if (allBookDetails.length >= limit + offset) {
+        break;
+      }
+    }
+  }
+
+  return allBookDetails.slice(offset, offset + limit);
+}

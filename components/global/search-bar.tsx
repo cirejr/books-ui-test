@@ -1,17 +1,47 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 import Link from "next/link";
 import { ScrollArea } from "../ui/scroll-area";
-import { useBookShelf } from "@/providers/book-shelf-provider";
-import Loading from "@/app/loading";
 import { Skeleton } from "../ui/skeleton";
+import { getAllBooks, getSearchBooks } from "@/lib/actions";
 
 export default function SearchBar() {
-  const [searchTerm, setSearchTerm] = React.useState("");
-  const [filteredBooks, setFilteredBooks] = React.useState<Book[]>([]);
-  const { books, isLoading } = useBookShelf();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [books, setBooks] = useState<Book[]>([]);
+  const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchInitialBooks = async () => {
+      try {
+        const initialBooks = await getSearchBooks(20); // Fetch initial 20 books
+        setBooks(initialBooks);
+        setIsLoading(false);
+
+        // Gradually load more books
+        let offset = 20;
+        const loadMoreBooks = async () => {
+          const moreBooks = await getSearchBooks(20, offset);
+          setBooks((prevBooks) => [...prevBooks, ...moreBooks]);
+          offset += 20;
+
+          if (moreBooks.length === 20) {
+            // Schedule the next batch if more books exist
+            setTimeout(loadMoreBooks, 3000); // Adjust delay as needed
+          }
+        };
+
+        loadMoreBooks();
+      } catch (error) {
+        console.error("Failed to fetch books:", error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchInitialBooks();
+  }, []);
 
   const handleSearch = (query: string) => {
     setSearchTerm(query);
@@ -31,7 +61,7 @@ export default function SearchBar() {
     <div className='w-full flex flex-col items-center justify-center'>
       <form
         onSubmit={(e) => e.preventDefault()}
-        className=' w-full flex items-center justify-center rounded-md bg-background/20 px-4 py-2 text-background shadow-sm transition-colors focus-within:bg-background/30'
+        className='w-full flex items-center justify-center rounded-md bg-background/20 px-4 py-2 text-background shadow-sm transition-colors focus-within:bg-background/30'
       >
         <div className='flex-1 flex items-center'>
           <SearchIcon />

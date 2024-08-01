@@ -8,7 +8,6 @@ import { useBookShelf } from "@/providers/book-shelf-provider";
 import { getShelves } from "@/lib/actions";
 
 export default async function Home() {
-  //const { shelves, isLoading } = useBookShelf();
   const shelves = await getShelves();
   return (
     <div className='w-full min-h-screen'>

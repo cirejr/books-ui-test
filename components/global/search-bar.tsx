@@ -4,18 +4,28 @@ import React from "react";
 import { Input } from "../ui/input";
 import Link from "next/link";
 import { ScrollArea } from "../ui/scroll-area";
+import { useBookShelf } from "@/providers/book-shelf-provider";
+import Loading from "@/app/loading";
+import { Skeleton } from "../ui/skeleton";
 
-export default function SearchBar({ allBooks }: { allBooks: Book[] }) {
+export default function SearchBar() {
   const [searchTerm, setSearchTerm] = React.useState("");
   const [filteredBooks, setFilteredBooks] = React.useState<Book[]>([]);
+  const { books, isLoading } = useBookShelf();
 
   const handleSearch = (query: string) => {
     setSearchTerm(query);
-    const filtered = allBooks.filter((book) =>
-      book?.title?.toLowerCase().includes(query.toLowerCase()),
-    );
-    setFilteredBooks(filtered);
+    if (books) {
+      const filtered = books.filter((book) =>
+        book?.title?.toLowerCase().includes(query.toLowerCase()),
+      );
+      setFilteredBooks(filtered);
+    }
   };
+
+  if (isLoading) {
+    return <Skeleton className='w-full h-12 rounded-md ' />;
+  }
 
   return (
     <div className='w-full flex flex-col items-center justify-center'>
@@ -41,16 +51,14 @@ export default function SearchBar({ allBooks }: { allBooks: Book[] }) {
               Résultats
             </h4>
             {filteredBooks.map((book) => (
-              <>
-                <div key={book.id} className='w-full'>
-                  <Link
-                    href={`/book/${book.book.slug}?id=${book.id}`}
-                    className='rounded-md py-1 px-2 my-1 hover:bg-background/20 transition-colors w-full'
-                  >
-                    {book.title}
-                  </Link>
-                </div>
-              </>
+              <div key={book.id} className='w-full'>
+                <Link
+                  href={`/book/${book.book.slug}?id=${book.id}`}
+                  className='rounded-md py-1 px-2 my-1 hover:bg-background/20 transition-colors w-full'
+                >
+                  {book.title}
+                </Link>
+              </div>
             ))}
           </div>
         </ScrollArea>

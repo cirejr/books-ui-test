@@ -20,8 +20,8 @@ export default async function Home() {
                 Découvrez votre prochaine grande lecture
               </h1>
               <p className='text-background/80 md:text-lg'>
-                Explorez notre vaste collection d'ebooks dans une grande variété
-                de genres.
+                Explorez notre vaste collection d&apos;ebooks dans une grande
+                variété de genres.
               </p>
               <SearchBar allBooks={allBooks} />
             </div>

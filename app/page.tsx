@@ -9,12 +9,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 import SearchBar from "@/components/global/search-bar";
 
 export default async function Home() {
-  /* const [shelves, allBooks] = (await Promise.all([
+  const [shelves, allBooks] = (await Promise.all([
     getShelves(),
     getAllBooks(),
-  ])) as [Shelf[], Book[]]; */
-  let shelves: Shelf[] = [];
-  let allBooks: Book[] = [];
+  ])) as [Shelf[], Book[]];
 
   return (
     <div className='w-full min-h-screen'>

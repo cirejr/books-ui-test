@@ -1,15 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { Input } from "../ui/input";
-import { Button } from "../ui/button";
 import Link from "next/link";
 import { ScrollArea } from "../ui/scroll-area";
-import { ScrollAreaScrollbar } from "@radix-ui/react-scroll-area";
 
 export default function SearchBar({ allBooks }: { allBooks: Book[] }) {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
+  const [searchTerm, setSearchTerm] = React.useState("");
+  const [filteredBooks, setFilteredBooks] = React.useState<Book[]>([]);
 
   const handleSearch = (query: string) => {
     setSearchTerm(query);
@@ -20,12 +18,13 @@ export default function SearchBar({ allBooks }: { allBooks: Book[] }) {
   };
 
   return (
-    <div>
+    <div className='w-full flex flex-col items-center justify-center'>
       <form
         onSubmit={(e) => e.preventDefault()}
-        className='flex items-center rounded-md bg-background/20 px-4 py-2 text-background shadow-sm transition-colors focus-within:bg-background/30'
+        className='max-w-md w-full flex items-center justify-center rounded-md bg-background/20 px-4 py-2 text-background shadow-sm transition-colors focus-within:bg-background/30'
       >
-        <div className='flex-1'>
+        <div className='flex-1 flex items-center'>
+          <SearchIcon />
           <Input
             type='search'
             value={searchTerm}
@@ -36,7 +35,7 @@ export default function SearchBar({ allBooks }: { allBooks: Book[] }) {
         </div>
       </form>
       {filteredBooks.length > 0 && searchTerm !== "" && (
-        <ScrollArea className='h-72 w-full mt-4 bg-white/30 rounded-md border backdrop-blur-lg backdrop:[filter:blur(10px)]'>
+        <ScrollArea className='h-72 max-w-md w-full mt-4 bg-white/30 rounded-md border backdrop-blur-lg backdrop:[filter:blur(10px)]'>
           <div className='p-4 space-y-2'>
             <h4 className='mb-4 text-xl font-medium leading-none px-2'>
               Résultats
@@ -57,5 +56,25 @@ export default function SearchBar({ allBooks }: { allBooks: Book[] }) {
         </ScrollArea>
       )}
     </div>
+  );
+}
+
+function SearchIcon(props: any) {
+  return (
+    <svg
+      {...props}
+      xmlns='http://www.w3.org/2000/svg'
+      width='24'
+      height='24'
+      viewBox='0 0 24 24'
+      fill='none'
+      stroke='currentColor'
+      strokeWidth='2'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+    >
+      <circle cx='11' cy='11' r='8' />
+      <path d='m21 21-4.3-4.3' />
+    </svg>
   );
 }

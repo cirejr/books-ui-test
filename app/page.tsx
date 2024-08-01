@@ -3,12 +3,11 @@ import React from "react";
 import { getAllBooks, getShelves } from "@/lib/actions";
 
 import HomeNavbar from "@/components/global/home-navbar";
-import SearchBar from "@/components/global/search-bar";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default async function Home() {
   const shelves = await getShelves();
-  const allBooks: Book[] = await getAllBooks();
 
   return (
     <div className='w-full min-h-screen'>
@@ -24,11 +23,11 @@ export default async function Home() {
                 Explorez notre vaste collection d&apos;ebooks dans une grande
                 variété de genres.
               </p>
-              <React.Suspense
-                fallback={<Skeleton className='h-11 w-full rounded-md' />}
-              >
-                <SearchBar allBooks={allBooks} />
-              </React.Suspense>
+              <Button asChild>
+                <Link href='/search' className='w-full h-12'>
+                  Cherchez un livre
+                </Link>
+              </Button>
             </div>
             <div className='hidden md:block relative w-full h-[800px]'>
               <div className="absolute top-[30px] left-0 w-1/2 h-1/2 rounded-lg bg-[url('/assets/images/book-bg1.jpg')] bg-cover bg-center -rotate-[20deg] " />

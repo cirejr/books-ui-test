@@ -62,7 +62,7 @@ export default async function BookDetails({
           </div>
           <div className='flex items-center justify-between'>
             <span className='font-medium'>Nombre de pages</span>
-            <span> {book.extents.gl_pages}</span>
+            <span>{book.extents.gl_pages}</span>
           </div>
         </div>
       </div>

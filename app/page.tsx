@@ -4,6 +4,7 @@ import { getAllBooks, getShelves } from "@/lib/actions";
 
 import HomeNavbar from "@/components/global/home-navbar";
 import SearchBar from "@/components/global/search-bar";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default async function Home() {
   const shelves = await getShelves();
@@ -23,7 +24,11 @@ export default async function Home() {
                 Explorez notre vaste collection d&apos;ebooks dans une grande
                 variété de genres.
               </p>
-              <SearchBar allBooks={allBooks} />
+              <React.Suspense
+                fallback={<Skeleton className='h-11 w-full rounded-md' />}
+              >
+                <SearchBar allBooks={allBooks} />
+              </React.Suspense>
             </div>
             <div className='hidden md:block relative w-full h-[800px]'>
               <div className="absolute top-[30px] left-0 w-1/2 h-1/2 rounded-lg bg-[url('/assets/images/book-bg1.jpg')] bg-cover bg-center -rotate-[20deg] " />

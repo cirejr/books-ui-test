@@ -50,7 +50,6 @@ export async function getBookDetails(bookIds: string[]) {
   return bookDetails;
 }
 
-// Fetch all books with batching and delay
 export async function getAllBooks() {
   const shelves = await getShelves();
   const allBookDetails: Book[] = [];
@@ -62,7 +61,7 @@ export async function getAllBooks() {
     while (hasMore) {
       const { bookIds, hasMore: moreBooks } = await getBookIds(
         shelf.id,
-        20, // Reduce batch size
+        10, // Reduce batch size
         offset,
       );
 
@@ -74,7 +73,7 @@ export async function getAllBooks() {
       hasMore = moreBooks;
 
       // Add a delay between batches
-      await delay(100); // Adjust the delay as needed
+      await delay(50); // Adjust the delay as needed
     }
   }
 

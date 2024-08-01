@@ -39,6 +39,11 @@ declare interface Book {
   image: string;
   adult: boolean;
   is_free: boolean;
+  price: {
+    amount: number;
+    currency: string;
+    includes_taxes: boolean;
+  };
 }
 
 declare interface Author {

@@ -42,10 +42,15 @@ export default async function BookDetails({
           </p>
         </div>
         <div className='grid gap-4'>
-          {parse(book.description)}
-          <Button size='lg'>
-            {book.can && book.is_free ? "Lire" : "Acheter"}
-          </Button>
+          {book.description && parse(book.description)}
+          {book.can && book.is_free && (
+            <Button size='lg'>Lire gratuitement</Button>
+          )}
+          {book.can && book.price && (
+            <Button size='lg'>
+              {book.price.amount} {book.price.currency === "EUR" ? "€" : "$"}
+            </Button>
+          )}
         </div>
         <div className='grid gap-2 border-t pt-4'>
           <div className='flex gap-3 w-full justify-between'>

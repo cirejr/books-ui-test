@@ -21,7 +21,7 @@ export default function SearchBar({ allBooks }: { allBooks: Book[] }) {
     <div className='w-full flex flex-col items-center justify-center'>
       <form
         onSubmit={(e) => e.preventDefault()}
-        className='max-w-md w-full flex items-center justify-center rounded-md bg-background/20 px-4 py-2 text-background shadow-sm transition-colors focus-within:bg-background/30'
+        className=' w-full flex items-center justify-center rounded-md bg-background/20 px-4 py-2 text-background shadow-sm transition-colors focus-within:bg-background/30'
       >
         <div className='flex-1 flex items-center'>
           <SearchIcon />
@@ -35,7 +35,7 @@ export default function SearchBar({ allBooks }: { allBooks: Book[] }) {
         </div>
       </form>
       {filteredBooks.length > 0 && searchTerm !== "" && (
-        <ScrollArea className='h-72 max-w-md w-full mt-4 bg-white/30 rounded-md border backdrop-blur-lg backdrop:[filter:blur(10px)]'>
+        <ScrollArea className='h-72 w-full mt-4 bg-white/30 rounded-md border backdrop-blur-lg backdrop:[filter:blur(10px)]'>
           <div className='p-4 space-y-2'>
             <h4 className='mb-4 text-xl font-medium leading-none px-2'>
               Résultats

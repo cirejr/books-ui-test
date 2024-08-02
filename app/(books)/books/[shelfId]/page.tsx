@@ -22,10 +22,10 @@ export default async function Book({
   const books = await getBookDetails(bookIds);
 
   return (
-    <main className='flex flex-col gap-4 pt-28 px-6 container relative w-full'>
-      <div className='container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 w-full'>
+    <main className='flex flex-col items-center gap-4 pt-28 w-full'>
+      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8'>
         {books.map((book: Book) => (
-          <Card key={book.id} className='relative group'>
+          <Card key={book.id} className='group max-w-[300px] lg:w-full'>
             <Link
               href={`/book/${book.book.slug}?id=${book.id}`}
               className='absolute inset-0 z-10'
@@ -39,7 +39,7 @@ export default async function Book({
                 alt={book.title}
                 width={200}
                 height={300}
-                className='w-full h-[300px] object-cover rounded-t-lg group-hover:opacity-80 transition-opacity'
+                className='w-full h-[300px] object-contain lg:object-cover rounded-t-lg group-hover:opacity-80 transition-opacity'
               />
               <div className='flex-1 p-4 bg-card text-card-foreground rounded-b-lg'>
                 <h3 className='text-lg font-semibold truncate'>{book.title}</h3>

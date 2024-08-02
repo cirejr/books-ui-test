@@ -15,7 +15,7 @@ export default function BooksLayout({
     <main className={cn("font-sans antialiased", fontSans.variable)}>
       <Header />
       <Sidebar />
-      <div className='container mx-auto flex h-screen lg:ml-64 hide-scrollbar'>
+      <div className='container mx-auto h-screen lg:ml-64 lg:max-w-[calc(100%-16rem)]'>
         {children}
       </div>
     </main>
